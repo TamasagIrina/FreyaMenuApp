@@ -1,0 +1,98 @@
+.top-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #ffffff;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  z-index: 999;
+
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .logo {
+     font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      margin: 0;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #555;
+      margin: 0;
+    }
+
+   
+  }
+
+  .search-section {
+    margin-top: 1rem;
+    margin-right: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    .search-box {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      background: #f2f2f2;
+      padding: 0.5rem 1.5rem;
+      border-radius: 30px;
+
+      mat-icon {
+        margin-right: 0.5rem;
+        color: #888;
+      }
+
+      input {
+        border: none;
+        background: transparent;
+        outline: none;
+        width: 100%;
+      }
+    }
+
+    .filter-button {
+      background-color: #673285;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 0.5rem;
+      height: 45px;
+      width: 45px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .category-bar {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+
+    .pill {
+      background: #f2f2f2;
+      border: none;
+      border-radius: 20px;
+      padding: 0.4rem 1rem;
+      color: #555;
+      cursor: pointer;
+      white-space: nowrap;
+
+      &.active {
+        background-color: #673285;
+        color: white;
+      }
+    }
+  }
+}
+.main-content {
+  margin-top: 200px;
+  padding: 1rem;
+}

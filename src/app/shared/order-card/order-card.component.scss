@@ -1,0 +1,74 @@
+.order-card {
+  margin: 1rem 0;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0.3rem 0.4rem 3rem rgba(11, 11, 11, 0.457);
+  background-color: whitesmoke;
+
+  .order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.6rem;
+
+    .order-id {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .order-status {
+      font-size: 0.85rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+      font-weight: 500;
+
+      &.in_pregătire {
+        background-color: #e6eb51d7;
+        color: #856404;
+      }
+
+      &.livrat {
+        background-color: #d4edda;
+        color: #155724;
+      }
+
+      &.anulat {
+        background-color: #f8d7da;
+        color: #721c24;
+      }
+    }
+  }
+
+  .order-prep-time {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.8rem;
+
+    mat-icon {
+      font-size: 18px;
+      margin-right: 0.4rem;
+      color: #673285;
+    }
+
+    strong {
+      margin-left: 0.3rem;
+      color: #333;
+    }
+  }
+
+  .order-items {
+    .item {
+      display: flex;
+      justify-content: space-between;
+      margin: 0.4rem 0;
+      font-size: 0.9rem;
+    }
+
+    .item-price {
+      font-weight: 500;
+    }
+  }
+}

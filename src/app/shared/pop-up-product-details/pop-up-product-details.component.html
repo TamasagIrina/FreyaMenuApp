@@ -1,0 +1,40 @@
+<button class="close-btn" mat-icon-button mat-dialog-close (click)="close()">
+  <mat-icon>close</mat-icon>
+</button>
+<div class="details-popup">
+  <img [src]="product.image" alt="Product" class="product-img" />
+
+  <h2 class="product-title">{{ product.name }}</h2>
+  <p class="product-subtitle">{{ product.subtitle }}</p>
+  <p class="product-description">{{ product.description }}</p>
+
+
+
+  <div class="quantity-selector">
+
+    <button class="quantity" (click)="decreaseQuantity()" [disabled]="quantity <= 1">
+      <mat-icon>remove</mat-icon>
+    </button>
+    <span>{{ quantity }}</span>
+    <button class="quantity" mat-icon-button (click)="increaseQuantity()">
+      <mat-icon>add</mat-icon>
+    </button>
+    <div class="price">{{ product.price }} RON</div>
+  </div>
+
+
+  <mat-form-field appearance="outline" class="note-input">
+    <mat-label>Informatii aditional</mat-label>
+    <textarea matInput [(ngModel)]="note" placeholder="De exemplu, fără ceapă, brânză suplimentară..."></textarea>
+  </mat-form-field>
+
+  
+  <div class="actions">
+    <button class="favorite-btn" mat-icon-button  (click)="addToFavorite()">
+      <mat-icon *ngIf="adedToFavorite" style="color: #e53935;">favorite</mat-icon>
+      <mat-icon *ngIf="!adedToFavorite" style="color: #888;">favorite_border</mat-icon>
+    </button>
+    <button class="add-btn" mat-stroked-button color="primary" (click)="addToCart()">Adaugă in coş</button>
+  </div>
+  
+</div>

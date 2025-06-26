@@ -1,0 +1,54 @@
+<nav class="custom-navbar">
+  <a routerLink="/" class="nav-icon">
+    <mat-icon>home</mat-icon>
+  </a>
+
+  <a routerLink="/profile" class="nav-icon">
+    <mat-icon>person</mat-icon>
+  </a>
+
+<div class="cart-container" [class.active]="((cartCount$ | async) || 0) > 0">
+  <div class="cart-notification" *ngIf="((cartCount$ | async) || 0) > 0">
+    <p class="cart-message">Accesează coșul</p>
+    <p class="cart-total">{{ totalPrice$ | async }}</p>
+  </div>
+
+  <button
+    matBadge="{{ cartCount$ | async }}"
+    matBadgeColor="accent"
+    class="center-button mat-elevation-z4"
+    [class.grow]="((cartCount$ | async) || 0) > 0"
+    (click)="goToCart()"
+  >
+    <mat-icon>shopping_cart</mat-icon>
+  </button>
+</div>
+
+<!-- <div class="cart-container" [class.active]="show">
+  <div class="cart-notification" *ngIf="show">
+    <p class="cart-message">Accesează coșul</p>
+    <p class="cart-total">{{ totalPrice$ | async }}</p>
+  </div>
+
+  <button
+    matBadge="{{ cartCount$ | async }}"
+    matBadgeColor="accent"
+    class="center-button mat-elevation-z4"
+    [class.grow]="show"
+    (click)="goToCart()"
+  >
+    <mat-icon>shopping_cart</mat-icon>
+  </button>
+</div> -->
+
+
+
+
+  <a routerLink="/favorites" class="nav-icon">
+    <mat-icon>favorite</mat-icon>
+  </a>
+
+  <a routerLink="/info" class="nav-icon">
+    <mat-icon>info</mat-icon>
+  </a>
+</nav>

@@ -1,0 +1,24 @@
+<mat-card class="order-card">
+  <div class="order-header">
+    <div class="order-id">Comanda #12345</div>
+    <div class="order-status" [ngClass]="order.status.toLowerCase()">
+      {{ order.status.replace("_"," ") }}
+    </div>
+  </div>
+
+  <div class="order-prep-time">
+    <mat-icon>schedule</mat-icon>
+    Timp estimat: <strong>{{ order.prepTime }} min</strong>
+  </div>
+
+  <div class="order-items">
+    <div class="item" *ngFor="let item of order.items">
+      <span class="item-name">{{ item.qty }}x {{ item.name }}</span>
+      <span class="item-price">{{ item.total | currency:'RON' }}</span>
+    </div>
+  </div>
+</mat-card>
+
+    
+
+

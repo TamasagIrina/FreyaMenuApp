@@ -1,0 +1,53 @@
+.favorites-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background-color: #fff;
+
+  .filter-button {
+      background-color: #673285;
+      border: none;
+      border-radius: 12px;
+      padding: 0.5rem;
+      height: 45px;
+      width: 45px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+
+  .left {
+    display: flex;
+    align-items: center;
+
+    .text {
+      margin-left: 12px;
+      
+
+      h2 {
+        font-family: 'Playfair Display', serif;
+        margin: 0;
+        font-size: 2.5rem;
+        font-weight: 600;
+      }
+
+      p {
+        margin: 2px 0 0;
+        font-size: 0.8rem;
+        color: #777;
+      }
+    }
+  }
+
+  .right {
+    button {
+      color: #ffffff;
+    }
+  }
+}
+.main-content {
+  margin-top: 1.5rem;
+  padding: 1rem;
+}
