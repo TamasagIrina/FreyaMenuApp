@@ -1,0 +1,19 @@
+<div class="cart-sheet">
+    <div class="cart-header">
+        <h3>Coșul tău</h3>
+        <button class="close-btn" (click)="close()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <div class="cart-content">
+        <p>Aici vor apărea produsele tale adăugate în coș...</p>
+    </div>
+    <div class="total">
+        <h3>Totalul: </h3>
+    </div>
+    <div class="cart-actions">
+
+        <button class="add-btn" mat-raised-button color="primary" (click)="goToPayment()">Finalizează comanda</button>
+    </div>
+</div>

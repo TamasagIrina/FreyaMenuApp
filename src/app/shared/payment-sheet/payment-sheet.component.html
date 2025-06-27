@@ -1,0 +1,56 @@
+<div class="peyment-sheet">
+  <div class="peyment-header">
+    <h3>Metoda de plată</h3>
+    <button class="close-btn" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <h1 class="total">Totalul este RON</h1>
+  <p>Selectează metoda de plată</p>
+
+  <form class="payment-section" [formGroup]="paymentForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Alege metoda de plată</mat-label>
+      <mat-select formControlName="method" (selectionChange)="onMethodChange()">
+        <mat-option value="cash">Cash</mat-option>
+        <mat-option value="card">Card</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+   <div class="card-details">
+  <mat-form-field appearance="outline" *ngIf="showCardFields">
+    <mat-icon matPrefix>person</mat-icon>
+    <mat-label>Nume deținător</mat-label>
+    <input matInput formControlName="cardName" placeholder="Ex. Ion Popescu" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" *ngIf="showCardFields">
+    <mat-icon matPrefix>credit_card</mat-icon>
+    <mat-label>Număr card</mat-label>
+    <input matInput formControlName="cardNumber" maxlength="16" placeholder="1234 5678 9012 3456" />
+  </mat-form-field>
+
+  <div class="card-row">
+    <mat-form-field appearance="outline" *ngIf="showCardFields">
+      <mat-icon matPrefix>event</mat-icon>
+      <mat-label>Data expirării</mat-label>
+      <input matInput formControlName="expiry" placeholder="LL/AA" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" *ngIf="showCardFields">
+      <mat-icon matPrefix>lock</mat-icon>
+      <mat-label>CVV</mat-label>
+      <input matInput formControlName="cvv" maxlength="3" />
+    </mat-form-field>
+  </div>
+</div>
+
+
+ <div class="payment-buttons">
+  <button class="payment-btn" mat-raised-button color="primary" [disabled]="!canPurchase">
+    Finalizează
+  </button>
+</div>
+  </form>
+</div>
