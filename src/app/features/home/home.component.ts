@@ -4,6 +4,8 @@ import { ProductCardComponent } from "../../shared/product-card/product-card.com
 import { AuthService } from '../../core/services/authService.sevice';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { DataBase } from '../../core/services/dataBase.service';
+
 
 
 
@@ -17,7 +19,9 @@ export class HomeComponent {
   username: string ="practica.freya@gmail.com" ;
   password: string ="practicafreya2025" ;
 
-  constructor(private authService: AuthService){}
+  constructor(private authService: AuthService,
+              private dataBaseService: DataBase
+  ){}
  ngOnInit(){
    this.authService.login(this.username,this.password).subscribe({
     next: (response: any) => {
@@ -26,6 +30,8 @@ export class HomeComponent {
       if (token) {
         this.authService.saveToken(token);
         console.log('Token salvat:', token);
+        this.dataBaseService.getSellingProducts();
+        this.dataBaseService.getCategorysSellingProducts();
       } else {
         console.error('Token lipsă în răspuns!');
       }
@@ -34,5 +40,9 @@ export class HomeComponent {
       console.error('Login failed:', err);
     }
   });
+
+
+
+  
  }
 }

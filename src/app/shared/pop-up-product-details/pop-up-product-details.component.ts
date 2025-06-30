@@ -29,6 +29,9 @@ export class PopUpProductDetailsComponent {
     id: 0,
     name: '',
     price: 0,
+    imageUid:'',
+    longDescription:'' ,
+    shortDescription:'',
     amount: 0
   };
   constructor(
