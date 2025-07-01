@@ -95,4 +95,11 @@
 .main-content {
   margin-top: 200px;
   padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+
+  
+  overflow-x: unset; 
 }

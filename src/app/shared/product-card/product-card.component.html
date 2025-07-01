@@ -1,15 +1,15 @@
 <mat-card class="card" (click)="openDetails()">
-  <img mat-card-image src="assets/images/burger.jpg" alt="Burger" />
+  <img mat-card-image src="{{product.imageUrl}}" alt="{{product.name}}" />
 
   <mat-card-content class="mat-card-content">
  
-    <h3 class="title">Cheeseburger</h3>
-    <p class="subtitle">Wendy's Burger adaabfsggavasdsssssssssss</p>
+    <h3 class="title">{{product.name}}</h3>
+    <p class="subtitle">{{product.shortDescription}}</p>
 
     <div class="card-footer">
       <div class="price">
         <mat-icon color="warn">payments</mat-icon>
-        <span>4.9 RON</span>
+        <span>{{product.price.toFixed(2)}}  RON</span>
       </div>
  
     </div>

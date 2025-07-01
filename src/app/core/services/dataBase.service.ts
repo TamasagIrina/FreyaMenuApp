@@ -18,30 +18,11 @@ export class DataBase {
         return this.http.get<any>(
             `${this.apiUrl}/product/FindSellingProducts?pageNo=0&sortBy=orderflag&sortOrder=asc&top=0&isRetuRo=false`
         );
-        // return this.http.get<any>(this.apiUrl + "/product/FindSellingProducts?pageNo=0&sortBy=orderflag&sortOrder=asc&top=0&isRetuRo=false  ").subscribe({
-        //     next: (data) => {
-        //         console.log('Products fetched:', data.payload.records);
-
-        //     },
-        //     error: (error) => {
-        //         console.error('Error fetching products:', error);
-        //     }
-        // });
-
-
-
+    
     }
 
-    getImage(url: string) {
-        return this.http.get<any>(this.apiUrl + "/Product/GetProductImage?imageUid=" + url).subscribe({
-            next: (data) => {
-                console.log('Products fetched:', data);
-
-            },
-            error: (error) => {
-                console.error('Error fetching products:', error);
-            }
-        });
+    getImage(url: string): Observable<{ payload: string }>  {
+        return this.http.get<{ payload: string }>(this.apiUrl + "/Product/GetProductImage?imageUid=" + url);
 
 
     }

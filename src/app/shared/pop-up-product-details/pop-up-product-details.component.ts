@@ -30,8 +30,10 @@ export class PopUpProductDetailsComponent {
     name: '',
     price: 0,
     imageUid:'',
+    imageUrl:'',
     longDescription:'' ,
     shortDescription:'',
+    category:'',
     amount: 0
   };
   constructor(

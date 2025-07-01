@@ -45,7 +45,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 2rem 0.3rem;
+            padding: 0 1rem 0.3rem;
             margin-top: 1rem;
 
             .price {
@@ -55,7 +55,7 @@
 
                 mat-icon {
                     font-size: 1.5rem;
-                    color: #e53935; // override if needed
+                    color: #13801fb7; 
                 }
 
                 span {
