@@ -1,0 +1,15 @@
+.notification {
+  position: fixed;
+  bottom: 4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #352e38;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 30px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  font-size: 14px;
+  opacity: 0.95;
+  z-index: 9999;
+  transition: opacity 0.3s ease;
+}

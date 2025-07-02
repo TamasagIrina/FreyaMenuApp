@@ -10,6 +10,7 @@ import { Store } from '@ngrx/store';
 import * as CartSelectors from '../../core/store/cart.selectors';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { CartSheetComponent } from '../cart-sheet/cart-sheet.component';
+import { NotificationComponent } from "../notification/notification.component";
 // import { BrowserModule } from '@angular/platform-browser';
 @Component({
   selector: 'app-bottom-navbar',

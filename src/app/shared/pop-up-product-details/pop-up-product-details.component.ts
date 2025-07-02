@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
@@ -9,6 +9,8 @@ import { Product } from '../../core/interfaces/product.model';
 import { Store } from '@ngrx/store';
 
 import * as CartActions from '../../core/store/cart.actions';
+import { NotificationComponent } from '../notification/notification.component';
+import { NotificationService } from '../../core/services/notification.service';
 
 
 
@@ -18,31 +20,24 @@ import * as CartActions from '../../core/store/cart.actions';
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    CommonModule
-  ],
+    CommonModule],
   templateUrl: './pop-up-product-details.component.html',
   styleUrl: './pop-up-product-details.component.scss'
 })
 export class PopUpProductDetailsComponent {
+
+
   quantity: number = 1;
   note: string = '';
   adedToFavorite: boolean = false;
-  productInterface: Product = {
-    id: '',
-    name: '',
-    price: 0,
-    imageUid:'',
-    imageUrl:'',
-    longDescription:'' ,
-    shortDescription:'',
-    category:'',
-    amount: 0
-  };
+ 
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public product: Product,
     private dialogRef: MatDialogRef<PopUpProductDetailsComponent>,
     private dialog: MatDialog,
-    private store: Store
+    private store: Store,
+    private notificationService: NotificationService 
   ) { }
 
   addToFavorite() {
@@ -56,22 +51,20 @@ export class PopUpProductDetailsComponent {
   }
 
 
-  addToCart(): void {
-    console.log('Added to cart:', {
-      ...this.product,
-      quantity: this.quantity,
-      note: this.note
-    });
+  async addToCart() {
+    this.store.dispatch(CartActions.addItem({ productId: this.product.id, quantity: this.quantity }));
 
     this.dialogRef.close();
-    this.productInterface.price = this.product.price;
-    this.productInterface.name = this.product.name;
-    this.productInterface.amount = this.quantity;
 
-    this.store.dispatch(CartActions.addItem({productId:this.product.id, quantity: this.quantity}));
+    await this.delay(300);
 
-
+    this.notificationService.show(`Ați adăugat în coș ${this.quantity} porții ${this.product.name}`);
   }
+
+  private delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
   close() {
     this.dialogRef.close();
   }
