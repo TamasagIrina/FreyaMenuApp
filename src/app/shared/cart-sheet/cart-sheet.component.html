@@ -6,14 +6,53 @@
         </button>
     </div>
 
-    <div class="cart-content">
-        <p>Aici vor apărea produsele tale adăugate în coș...</p>
-    </div>
-    <div class="total">
-        <h3>Totalul: </h3>
-    </div>
-    <div class="cart-actions">
+    <ng-container *ngIf="cartItem$ | async as items">
+        <div *ngIf="!items || items.length === 0" class="empty-cart">
+            Your shopping cart is empty. Add some products!
+        </div>
 
-        <button class="add-btn" mat-raised-button color="primary" (click)="goToPayment()">Finalizează comanda</button>
-    </div>
+        <div *ngIf="items && items.length > 0" class="cart-container">
+            <ul class="cart-items-list">
+                <li class="header">
+                    <span class="item-details">Product</span>
+                    <span class="item-quantity">Quantity</span>
+                    <span class="item-price">Price</span>
+                    <span class="item-total">Total</span>
+                    <span class="item-actions">Actions</span>
+                </li>
+                <li *ngFor="let item of items;" class="cart-item">
+                    <div class="item-details">
+                        <img [src]="item.imageUrl" [alt]="item.name" class="item-image"
+                            onerror="this.src='https://placehold.co/60x40/cccccc/ffffff?text=Img'">
+                        <span>{{ item.name }}</span>
+                    </div>
+                    <div class="item-quantity">
+                        <button (click)="decrease(item.productId)" class="quantity-btn"
+                            aria-label="Decrease quantity">-</button>
+                        <span>{{ item.quantity }}</span>
+                        <button (click)="increase(item.productId)" class="quantity-btn"
+                            aria-label="Increase quantity">+</button>
+                    </div>
+                    <span class="item-price">{{ item.price.toFixed(1) | currency:'RON':'symbol' }}</span>
+                    <span class="item-total">{{ item.lineTotal.toFixed(1) | currency:'RON':'symbol' }}</span>
+                    <div class="item-actions">
+                        <button (click)="remove(item.productId)" class="remove-btn"
+                            aria-label="Remove item"><mat-icon>delete</mat-icon></button>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="cart-summary">
+
+
+                <button class="add-btn" mat-raised-button color="primary" (click)="goToPayment()">Finalizează
+                    comanda</button>
+
+                <div class="cart-total">
+                    <strong>Grand Total: {{ totalPrice$ | async | currency:'RON':'symbol' }}</strong>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
 </div>

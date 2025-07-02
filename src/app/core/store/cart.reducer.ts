@@ -15,7 +15,7 @@ export const intiialState : CartState = {
 export const cartReducer = createReducer(
   intiialState,
 
-  on(CartActions.addItem, (state, {productId}) => {
+  on(CartActions.addItem, (state, {productId, quantity}) => {
     const existingItemIndex = state.items.findIndex(item => item.productId === productId);
 
     let updatedItems : CartItem[];
@@ -27,7 +27,7 @@ export const cartReducer = createReducer(
       : item
     );
     }else{
-      updatedItems = [...state.items, {productId, quantity : 1}]
+      updatedItems = [...state.items, {productId, quantity : quantity}]
     }
 
     return {...state, items : updatedItems}

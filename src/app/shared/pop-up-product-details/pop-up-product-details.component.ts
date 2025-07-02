@@ -8,6 +8,8 @@ import { CommonModule } from '@angular/common';
 import { Product } from '../../core/interfaces/product.model';
 import { Store } from '@ngrx/store';
 
+import * as CartActions from '../../core/store/cart.actions';
+
 
 
 @Component({
@@ -66,7 +68,7 @@ export class PopUpProductDetailsComponent {
     this.productInterface.name = this.product.name;
     this.productInterface.amount = this.quantity;
 
-    // this.store.dispatch(addToCart({ product: this.productInterface }));
+    this.store.dispatch(CartActions.addItem({productId:this.product.id, quantity: this.quantity}));
 
 
   }

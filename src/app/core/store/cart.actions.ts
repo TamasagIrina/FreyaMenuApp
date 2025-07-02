@@ -4,7 +4,7 @@ import { Product } from '../interfaces/product.model';
 
 export const addItem = createAction(
   '[cart Page] Add Item ',
-  props<{productId : string}>()
+  props<{productId : string, quantity : number}>()
 );
 
 export const removeItem = createAction(

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { RouterModule } from '@angular/router';
@@ -7,6 +7,7 @@ import { Product } from '../../core/interfaces/product.model';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
+import * as CartSelectors from '../../core/store/cart.selectors';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { CartSheetComponent } from '../cart-sheet/cart-sheet.component';
 // import { BrowserModule } from '@angular/platform-browser';
@@ -17,10 +18,12 @@ import { CartSheetComponent } from '../cart-sheet/cart-sheet.component';
   styleUrl: './bottom-navbar.component.scss'
 })
 export class BottomNavbarComponent {
+  private store = inject(Store);
+  totalPrice$: Observable<number> | undefined;
 
 
-  constructor(private store: Store, private bottomSheet: MatBottomSheet) {
-
+  constructor(private bottomSheet: MatBottomSheet) {
+    this.totalPrice$ = this.store.select(CartSelectors.selectCartTotalItems);
   }
 
 
@@ -29,6 +32,6 @@ export class BottomNavbarComponent {
     this.bottomSheet.open(CartSheetComponent, {
       panelClass: 'custom-cart-sheet'
     });
-    console.log('Navighează spre coș');
+
   }
 }

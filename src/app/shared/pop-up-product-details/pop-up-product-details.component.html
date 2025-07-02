@@ -19,7 +19,7 @@
     <button class="quantity" mat-icon-button (click)="increaseQuantity()">
       <mat-icon>add</mat-icon>
     </button>
-    <div class="price">{{product.price*quantity}} RON</div>
+    <div class="price">{{(product.price*quantity).toFixed(2)}} RON</div>
   </div>
 
 
