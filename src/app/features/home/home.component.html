@@ -45,7 +45,7 @@
     </ng-container>
   </ng-container>
 
-  <ng-template #noProducts>
-    <div>Nu sunt produse disponibile</div>
+  <ng-template #noProducts >
+    <div *ngIf="loading$">loading....</div>
   </ng-template>
 </div>

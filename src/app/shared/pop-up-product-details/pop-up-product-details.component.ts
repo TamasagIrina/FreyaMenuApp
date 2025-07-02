@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { Product } from '../../core/interfaces/product.model';
 import { Store } from '@ngrx/store';
-import { addToCart } from '../../core/store/cart.actions';
+
 
 
 @Component({
@@ -26,7 +26,7 @@ export class PopUpProductDetailsComponent {
   note: string = '';
   adedToFavorite: boolean = false;
   productInterface: Product = {
-    id: 0,
+    id: '',
     name: '',
     price: 0,
     imageUid:'',
@@ -37,7 +37,7 @@ export class PopUpProductDetailsComponent {
     amount: 0
   };
   constructor(
-    @Inject(MAT_DIALOG_DATA) public product: any,
+    @Inject(MAT_DIALOG_DATA) public product: Product,
     private dialogRef: MatDialogRef<PopUpProductDetailsComponent>,
     private dialog: MatDialog,
     private store: Store
@@ -66,7 +66,7 @@ export class PopUpProductDetailsComponent {
     this.productInterface.name = this.product.name;
     this.productInterface.amount = this.quantity;
 
-    this.store.dispatch(addToCart({ product: this.productInterface }));
+    // this.store.dispatch(addToCart({ product: this.productInterface }));
 
 
   }

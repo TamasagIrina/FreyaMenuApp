@@ -7,24 +7,13 @@
     <mat-icon>person</mat-icon>
   </a>
 
-<div class="cart-container" [class.active]="((cartCount$ | async) || 0) > 0">
-  <div class="cart-notification" *ngIf="((cartCount$ | async) || 0) > 0">
-    <p class="cart-message">Accesează coșul</p>
-    <p class="cart-total">{{ totalPrice$ | async }}</p>
+  <div class="cart-container">
+    <button matBadge="" matBadgeColor="accent" class="center-button mat-elevation-z4" (click)="goToCart()">
+      <mat-icon>shopping_cart</mat-icon>
+    </button>
   </div>
 
-  <button
-    matBadge="{{ cartCount$ | async }}"
-    matBadgeColor="accent"
-    class="center-button mat-elevation-z4"
-    [class.grow]="((cartCount$ | async) || 0) > 0"
-    (click)="goToCart()"
-  >
-    <mat-icon>shopping_cart</mat-icon>
-  </button>
-</div>
-
-<!-- <div class="cart-container" [class.active]="show">
+  <!-- <div class="cart-container" [class.active]="show">
   <div class="cart-notification" *ngIf="show">
     <p class="cart-message">Accesează coșul</p>
     <p class="cart-total">{{ totalPrice$ | async }}</p>

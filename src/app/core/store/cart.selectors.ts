@@ -1,22 +1,46 @@
-import { createSelector, createFeatureSelector } from '@ngrx/store';
-import { Product } from '../interfaces/product.model';
+import { createFeatureSelector, createSelector } from "@ngrx/store";
+import * as fromCart from './cart.reducer';
+import * as fromProducts from './products.selectors'
+import { CartItemDetailed } from '../interfaces/cart.model';
 
 
-export const selectCartState = createFeatureSelector<Product[]>('cart');
+export const selectCartState = createFeatureSelector<fromCart.CartState>(fromCart.cartFeatureKey);
 
 
-export const selectCartProducts = createSelector(
+export const selectCartItems = createSelector(
   selectCartState,
-  (cart: Product[]) => cart
+  (state : fromCart.CartState) => state.items
 );
 
-export const selectCartCount = createSelector(
-  selectCartState,
-  (cart: Product[]) => cart.length
+export const selectCartTotalItems = createSelector(
+  selectCartItems,
+  (items) => items.reduce((total, item) => total + item.quantity, 0)
+);
+
+
+export const selectCartItemsWithDetails = createSelector(
+  selectCartItems,
+  fromProducts.selectProducts,
+  (items, products) : CartItemDetailed[] => {
+    if(!products || products.length == 0 ){
+      return [];
+    }
+    return items.map(item => {
+      const product = products.find(p => p.id === item.productId);
+      const price = product?.price ?? 0;
+      const lineTotal = item.quantity * price;
+      return {
+        ...item,
+        name : product?.name ?? 'Product not found',
+        price  : price,
+        imageUrl : product?.imageUrl ?? 'Image not found',
+        lineTotal : lineTotal
+      };
+    })
+  }
 );
 
 export const selectCartTotalPrice = createSelector(
-  selectCartState,
-  (cart: Product[]) =>
-    cart.reduce((total, product) => total + product.price * product.amount, 0)
-);
+selectCartItemsWithDetails,
+(detailedItem) => detailedItem.reduce((total, item) => total + item.lineTotal, 0)
+)

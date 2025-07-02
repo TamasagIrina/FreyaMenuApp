@@ -25,22 +25,13 @@ export class ProductCardComponent {
     
   }
 
-  setImage(){
-    // this.image=this.dataBase.getImage(this.product.imageUid);
-    console.log(this.product.imageUid);
-  }
 
   openDetails() {
     this.dialog.open(PopUpProductDetailsComponent, {
       width: '30rem',
       height: '40rem',
-      data: {
-        name: this.product.name,
-        subtitle: this.product.category,
-        description: this.product.longDescription,
-        image: this.product.imageUrl,
-        price: this.product.price
-      }
+      data: this.product
+      
     });
   }
 }

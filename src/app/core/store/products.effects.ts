@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as ProductsActions from './products.actions';
-import { catchError, exhaustMap, forkJoin, map, mergeMap, Observable, of, pipe, switchMap } from 'rxjs';
+import { catchError, exhaustMap, forkJoin, map, mergeMap, Observable, of, pipe, switchMap, timeout } from 'rxjs';
 import { DataBase } from '../services/dataBase.service';
 import { Product } from '../interfaces/product.model';
 
@@ -71,23 +71,27 @@ export class ProductsEffects {
                 });
               }
 
+             
               return this.databaseService.getImage(product.imageUid).pipe(
+                timeout(15000),
                 map((response) => ({
                   ...product,
-                  imageUrl: response.payload, // payload-ul cu imaginea base64
+                  imageUrl: response.payload,
                 })),
                 catchError((err) => {
                   console.error(`Error loading image for product ${product.id}:`, err);
                   return of({
                     ...product,
-                    imageUrl: null, // fallback dacă nu poate încărca imaginea
+                    imageUrl: null,
                   });
                 })
               );
-            });
+            }, 5)
 
             return forkJoin(productsWithImages$) as Observable<Product[]>;
-          }),
+            
+          
+        }),
           map((productsWithImages) =>
             ProductsActions.loadProductsSuccess({ products: productsWithImages })
           ),
@@ -98,4 +102,6 @@ export class ProductsEffects {
       )
     )
   );
+
+  
 }

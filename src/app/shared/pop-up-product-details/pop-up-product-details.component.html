@@ -2,11 +2,11 @@
   <mat-icon>close</mat-icon>
 </button>
 <div class="details-popup">
-  <img [src]="product.image" alt="Product" class="product-img" />
+  <img [src]="product.imageUrl" alt="Product" class="product-img" />
 
   <h2 class="product-title">{{ product.name }}</h2>
-  <p class="product-subtitle">{{ product.subtitle }}</p>
-  <p class="product-description">{{ product.description }}</p>
+  <p class="product-subtitle">{{ product.category }}</p>
+  <p class="product-description">{{ product.longDescription }}</p>
 
 
 
@@ -19,12 +19,12 @@
     <button class="quantity" mat-icon-button (click)="increaseQuantity()">
       <mat-icon>add</mat-icon>
     </button>
-    <div class="price">{{product.price}} RON</div>
+    <div class="price">{{product.price*quantity}} RON</div>
   </div>
 
 
   <mat-form-field appearance="outline" class="note-input">
-    <mat-label>Informatii aditional</mat-label>
+    <mat-label>Informatii aditionale</mat-label>
     <textarea matInput [(ngModel)]="note" placeholder="De exemplu, fără ceapă, brânză suplimentară..."></textarea>
   </mat-form-field>
 
