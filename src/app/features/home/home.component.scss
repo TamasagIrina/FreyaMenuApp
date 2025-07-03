@@ -4,7 +4,7 @@
   width: 100%;
   background: #ffffff;
   padding: 1rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
   z-index: 999;
 
   .header-top {
@@ -13,18 +13,16 @@
     align-items: center;
 
     .logo {
-     font-family: 'Playfair Display', serif;
+      font-family: 'Playfair Display', serif;
       font-size: 2rem;
       margin: 0;
     }
 
     .subtitle {
-      font-size: 14px;
+      font-size: 0.875rem;
       color: #555;
       margin: 0;
     }
-
-   
   }
 
   .search-section {
@@ -40,7 +38,7 @@
       align-items: center;
       background: #f2f2f2;
       padding: 0.5rem 1.5rem;
-      border-radius: 30px;
+      border-radius: 1.875rem;
 
       mat-icon {
         margin-right: 0.5rem;
@@ -59,10 +57,10 @@
       background-color: #673285;
       color: white;
       border: none;
-      border-radius: 12px;
+      border-radius: 0.75rem;
       padding: 0.5rem;
-      height: 45px;
-      width: 45px;
+      height: 2.8125rem;
+      width: 2.8125rem;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -79,7 +77,7 @@
     .pill {
       background: #f2f2f2;
       border: none;
-      border-radius: 20px;
+      border-radius: 1.25rem;
       padding: 0.4rem 1rem;
       color: #555;
       cursor: pointer;
@@ -92,14 +90,24 @@
     }
   }
 }
+
 .main-content {
-  margin-top: 200px;
+  margin-top: 12rem;
   padding: 1rem;
   display: grid;
-  grid-template-columns: repeat(2, 1fr); 
-  gap: 0.5rem;
-  padding-bottom: 0.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.3rem;
+  overflow-x: hidden;
+}
 
-  
-  overflow-x: unset; 
+.loading {
+  margin-top: 12rem;
+  width: 100vw;            
+  height: 50vh;            
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  overflow-x: hidden;   
 }

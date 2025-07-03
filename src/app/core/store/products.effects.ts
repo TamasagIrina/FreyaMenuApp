@@ -52,6 +52,7 @@ export class ProductsEffects {
             console.log('API response in effect:', data);
             const products: Product[] = data.payload.records.map((item: any) => ({
               id: item.id,
+              uid: item.uid,
               name: item.name,
               price: item.locationPrices[0].unitPriceWithVat,
               imageUid: item.imageUid,

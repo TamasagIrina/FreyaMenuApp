@@ -1,13 +1,28 @@
-
 <div class="profile-header">
   <img class="avatar" src="assets/images/profile.jpg" alt="User" />
 
   <div class="user-info">
     <h2>Salut!</h2>
-   <p>De aici îți poți urmări comenzile</p>
+    <p>De aici îți poți urmări comenzile</p>
   </div>
 </div>
 
 <div class="main-content">
-  <app-order-card></app-order-card>
+  <div class="order-tabs">
+    <button 
+      [class.active]="selectedTab === 'in_progress'"
+      (click)="selectTab('in_progress')">
+      În pregatire
+    </button>
+    <button 
+      [class.active]="selectedTab === 'delivered'"
+      (click)="selectTab('delivered')">
+      Livrate
+    </button>
+  </div>
+
+  <div class="orders-list">
+    <app-order-card>
+    </app-order-card>
+  </div>
 </div>

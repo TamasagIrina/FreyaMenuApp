@@ -48,7 +48,7 @@
 
 
  <div class="payment-buttons">
-  <button class="payment-btn" mat-raised-button color="primary" [disabled]="!canPurchase">
+  <button class="payment-btn" (click)="placeOrder()" mat-raised-button color="primary" [disabled]="!canPurchase">
     Finalizează
   </button>
 </div>

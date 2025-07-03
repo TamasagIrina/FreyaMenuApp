@@ -16,36 +16,38 @@
     </button>
   </div>
 
-  <div class="category-bar">
+  <div class="category-bar" *ngIf="categories$ | async as categories; else loadingCategories">
     <button class="pill active">Toate</button>
-    <button class="pill">Bauturi</button>
-    <button class="pill">Aperitive</button>
-    <button class="pill">Ciorbe si supe</button>
-    <button class="pill">Fel principal</button>
+    <button class="pill" *ngFor="let category of categories">
+      {{ category.name }}
+    </button>
   </div>
+
+  <ng-template #loadingCategories>
+    <div class="category-bar">
+      <span>Loading categories...</span>
+    </div>
+  </ng-template>
+
 </header>
 
-<!-- <div class="main-content">
-  @for (prod of products$ | async; track $index){
-    
-  <app-product-card [product]="prod"></app-product-card>
 
-  }@empty {
-  <div>Nu sunt produse disponibile</div>
-  }
 
-</div> -->
-
-<div class="main-content">
+<div>
   <ng-container *ngIf="products$ | async as products; else noProducts">
     <ng-container *ngIf="products.length > 0; else noProducts">
-      <div *ngFor="let prod of products">
+      <!-- <div *ngFor="let prod of products">
         <app-product-card [product]="prod"></app-product-card>
+      </div> -->
+      <div class="main-content">
+        <app-product-card *ngFor="let prod of products" [product]="prod"></app-product-card>
       </div>
     </ng-container>
   </ng-container>
 
-  <ng-template #noProducts >
-    <div *ngIf="loading$">loading....</div>
+  <ng-template #noProducts>
+    <div class="loading" *ngIf="loading$">
+      <img src="assets/loading.gif" alt="">
+    </div>
   </ng-template>
 </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -7,17 +7,43 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
+import { CartItemDetailed } from '../../core/interfaces/cart.model';
+import { firstValueFrom, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import * as CartSelectors from '../../core/store/cart.selectors';
+import { DataBase } from '../../core/services/dataBase.service';
 @Component({
   selector: 'app-payment-sheet',
-  imports: [MatIconModule, MatFormFieldModule, MatSelectModule, ReactiveFormsModule,CommonModule,MatInputModule],
+  imports: [MatIconModule, MatFormFieldModule, MatSelectModule, ReactiveFormsModule, CommonModule, MatInputModule],
   templateUrl: './payment-sheet.component.html',
   styleUrl: './payment-sheet.component.scss'
 })
 export class PaymentSheetComponent {
+  private store = inject(Store);
+
   paymentForm: FormGroup;
   canPurchase = false;
   showCardFields = false;
-  constructor(private bottomSheetRef: MatBottomSheetRef<PaymentSheetComponent>, private fb: FormBuilder) {
+  cartItem$: Observable<CartItemDetailed[]>;
+
+  cardPayment = {
+    "paymentUid": "168e41c33b2d4e16ba86789955031db7",
+    "paymentName": "Card",
+    "isPaid": true,
+    "paymentDocumentDate": null,
+    "paymentDocumentSerial": null,
+    "paymentDocumentNumber": null,
+    "paymentManagementUid": null
+  }
+
+  cashPayment = {
+    "paymentUid": "057e9c4508884cbd8fc8fa9514e315d2",
+    "paymentName": "Cash",
+    "isPaid": false
+  }
+
+
+  constructor(private bottomSheetRef: MatBottomSheetRef<PaymentSheetComponent>, private fb: FormBuilder, private databasa: DataBase) {
     this.paymentForm = this.fb.group({
       method: [''],
       cardName: [''],
@@ -44,6 +70,8 @@ export class PaymentSheetComponent {
         this.canPurchase = false;
       }
     });
+
+    this.cartItem$ = this.store.select(CartSelectors.selectCartItemsWithDetails);
   }
 
   onMethodChange() {
@@ -70,5 +98,52 @@ export class PaymentSheetComponent {
 
   close() {
     this.bottomSheetRef.dismiss();
+  }
+
+
+
+  async placeOrder() {
+    try {
+      const cart = await firstValueFrom(this.cartItem$);
+
+      const preparedItems = this.prepareCartItems(cart);
+
+      const method = this.paymentForm.get('method')?.value;
+
+      const userUId=localStorage.getItem("userUID") ?? "";
+
+      if(method==="card"){
+        this.databasa.placeOrder(preparedItems, userUId, this.cardPayment);
+        this.close();
+      }else{
+        this.databasa.placeOrder(preparedItems, userUId, this.cashPayment);
+        this.close();
+      }
+
+    } catch (error) {
+      console.error('Eroare la pregătirea produselor din coș:', error);
+    }
+  }
+
+  prepareCartItems(cart: any[]): any[] {
+    return cart.map(item => ({
+      "uid": null,
+      "description": null,
+      "parentProductUid": null,
+      "productName": item.name,
+      "productUid": item.uid,
+      "vatRate": 0,
+      "units": 1,
+      "quantity": item.quantity,
+      "finalQuantity": item.quantity,
+      "unitPriceWithVat": item.price,
+      "discountValue": 0,
+      "discountPercent": 0,
+      "discountType": 0,
+      "addedAt": new Date().toISOString(),
+      "toppings": [],
+      "collectibleUnits": 0,
+      "isRetuRo": false
+    }));
   }
 }

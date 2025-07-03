@@ -34,6 +34,7 @@ export const selectCartItemsWithDetails = createSelector(
       const lineTotal = item.quantity * price;
       return {
         ...item,
+        uid: product?.uid ?? '',
         name : product?.name ?? 'Product not found',
         price  : price,
         imageUrl : product?.imageUrl ?? 'Image not found',

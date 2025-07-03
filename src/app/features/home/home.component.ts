@@ -10,6 +10,7 @@ import { selectProducts, selectProductsError, selectProductsLoading } from '../.
 import { loadProducts } from '../../core/store/products.actions';
 import { Product } from '../../core/interfaces/product.model';
 import { Observable } from 'rxjs';
+import * as CategorySelectors from '../../core/store/category.selectors';
 
 
 
@@ -21,52 +22,28 @@ import { Observable } from 'rxjs';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  username: string = "practica.freya@gmail.com";
-  password: string = "practicafreya2025";
-
   products$: Observable<Product[]> | undefined;
-;
   loading$: any;
   error$: any;
 
+  categories$: Observable<any[]>;
+  categoriesLoading$: Observable<boolean>;
+  categoriesError$: Observable<any>;
 
 
 
   constructor(private authService: AuthService,
     private dataBaseService: DataBase,
     private store: Store
-  ) { }
+  ) {
+    this.products$ = this.store.select(selectProducts);
+    this.loading$ = this.store.select(selectProductsLoading);
+    this.error$ = this.store.select(selectProductsError);
 
-
-  ngOnInit() {
-    
-    this.authService.login(this.username, this.password).subscribe({
-      next: (response: any) => {
-        console.log('Login success:', response);
-        const token = response.payload?.token;
-        if (token) {
-          this.authService.saveToken(token);
-          console.log('Token salvat:', token);
-  
-          this.store.dispatch(loadProducts());
-
-          this.products$ = this.store.select(selectProducts);
-          this.loading$ = this.store.select(selectProductsLoading);
-          this.error$ = this.store.select(selectProductsError);
-
-          console.log(this.products$);
-
-        } else {
-          console.error('Token lipsă în răspuns!');
-        }
-      },
-      error: (err) => {
-        console.error('Login failed:', err);
-      }
-    });
-
-
-
-
+    this.categories$ = this.store.select(CategorySelectors.selectCategories);
+    this.categoriesLoading$ = this.store.select(CategorySelectors.selectCategoriesLoading);
+    this.categoriesError$ = this.store.select(CategorySelectors.selectCategoriesError);
   }
+
+
 }

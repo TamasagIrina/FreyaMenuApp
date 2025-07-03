@@ -1,5 +1,5 @@
 <nav class="custom-navbar">
-  <a routerLink="/" class="nav-icon">
+  <a routerLink="/home" class="nav-icon">
     <mat-icon>home</mat-icon>
   </a>
 
@@ -12,25 +12,6 @@
       <mat-icon>shopping_cart</mat-icon>
     </button>
   </div>
-
-  <!-- <div class="cart-container" [class.active]="show">
-  <div class="cart-notification" *ngIf="show">
-    <p class="cart-message">Accesează coșul</p>
-    <p class="cart-total">{{ totalPrice$ | async }}</p>
-  </div>
-
-  <button
-    matBadge="{{ cartCount$ | async }}"
-    matBadgeColor="accent"
-    class="center-button mat-elevation-z4"
-    [class.grow]="show"
-    (click)="goToCart()"
-  >
-    <mat-icon>shopping_cart</mat-icon>
-  </button>
-</div> -->
-
-
 
 
   <a routerLink="/favorites" class="nav-icon">
