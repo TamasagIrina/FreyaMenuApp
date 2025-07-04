@@ -12,6 +12,7 @@ import { firstValueFrom, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as CartSelectors from '../../core/store/cart.selectors';
 import { DataBase } from '../../core/services/dataBase.service';
+import * as OrderActions from '../../core/store/order.actions';
 @Component({
   selector: 'app-payment-sheet',
   imports: [MatIconModule, MatFormFieldModule, MatSelectModule, ReactiveFormsModule, CommonModule, MatInputModule],
@@ -119,6 +120,10 @@ export class PaymentSheetComponent {
         this.databasa.placeOrder(preparedItems, userUId, this.cashPayment);
         this.close();
       }
+
+              this.store.dispatch(OrderActions.loadClientOrders({ userUID: localStorage.getItem("userUID") as string }));
+      
+        
 
     } catch (error) {
       console.error('Eroare la pregătirea produselor din coș:', error);

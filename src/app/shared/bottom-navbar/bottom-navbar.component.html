@@ -14,8 +14,8 @@
   </div>
 
 
-  <a routerLink="/favorites" class="nav-icon">
-    <mat-icon>favorite</mat-icon>
+  <a matBadge="{{totalFavorites$ | async }}"  matBadgeColor="accent" routerLink="/favorites" class="nav-icon">
+    <mat-icon >favorite</mat-icon>
   </a>
 
   <a routerLink="/info" class="nav-icon">

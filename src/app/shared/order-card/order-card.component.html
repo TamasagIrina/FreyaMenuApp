@@ -1,24 +1,42 @@
 <mat-card class="order-card">
   <div class="order-header">
-    <div class="order-id">Comanda #12345</div>
-    <div class="order-status" [ngClass]="order.status.toLowerCase()">
-      {{ order.status.replace("_"," ") }}
+    <div class="order-id">
+      Comanda #{{ order.shortCode }}
     </div>
+   <div class="order-status"
+     [ngClass]="{
+       'in_pregatire': order.status === 1,
+       'pregătit': order.status === 2
+     }">
+  <ng-container *ngIf="order.status === 1">
+    În pregătire
+  </ng-container>
+  <ng-container *ngIf="order.status === 2">
+    Pregătit
+  </ng-container>
+</div>
   </div>
 
-  <div class="order-prep-time">
+  <div class="order-delivery-time">
     <mat-icon>schedule</mat-icon>
-    Timp estimat: <strong>{{ order.prepTime }} min</strong>
+    Livrare estimată:
+    <strong>{{ order.deliveryDate | date: 'shortTime' }}</strong>
+  </div>
+
+  <div class="order-payment" *ngIf="order.payments.length > 0">
+    <mat-icon>payment</mat-icon>
+    Metodă plată:
+    <strong>{{ order.payments[0].paymentName }}</strong>
   </div>
 
   <div class="order-items">
     <div class="item" *ngFor="let item of order.items">
-      <span class="item-name">{{ item.qty }}x {{ item.name }}</span>
-      <span class="item-price">{{ item.total | currency:'RON' }}</span>
+      <span class="item-name">{{ item.quantity }}x {{ item.productName }}</span>
+      <span class="item-price">{{ item.totalValueWithVat | currency:'RON' }}</span>
     </div>
   </div>
+
+  <div class="order-total">
+    Total: <strong>{{ order.finalValue | currency:'RON' }}</strong>
+  </div>
 </mat-card>
-
-    
-
-

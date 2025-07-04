@@ -12,3 +12,8 @@ export const loadProductsFailure = createAction(
   '[Products] Load Products Failure',
   props<{ error: any }>()
 );
+
+export const setProductImage = createAction(
+  '[Products] Set Product Image',
+  props<{ productId: string; imageUrl: string }>()
+);

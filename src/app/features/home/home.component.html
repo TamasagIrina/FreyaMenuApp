@@ -9,7 +9,7 @@
   <div class="search-section">
     <div class="search-box">
       <mat-icon>search</mat-icon>
-      <input type="text" placeholder="Search" />
+      <input type="text" placeholder="Caută produse..." (input)="onSearch($event)" />
     </div>
     <button class="filter-button">
       <mat-icon>tune</mat-icon>
@@ -17,8 +17,12 @@
   </div>
 
   <div class="category-bar" *ngIf="categories$ | async as categories; else loadingCategories">
-    <button class="pill active">Toate</button>
-    <button class="pill" *ngFor="let category of categories">
+    <button class="pill" [ngClass]="{ active: selectedCategory === null }" (click)="scrollToTop()">
+      Toate
+    </button>
+
+    <button class="pill" *ngFor="let category of categories" [ngClass]="{ active: selectedCategory === category.name }"
+      (click)="scrollToCategory(category.name)">
       {{ category.name }}
     </button>
   </div>
@@ -33,18 +37,23 @@
 
 
 
-<div>
+<div class="products">
   <ng-container *ngIf="products$ | async as products; else noProducts">
     <ng-container *ngIf="products.length > 0; else noProducts">
-      <!-- <div *ngFor="let prod of products">
-        <app-product-card [product]="prod"></app-product-card>
-      </div> -->
-      <div class="main-content">
-        <app-product-card *ngFor="let prod of products" [product]="prod"></app-product-card>
-      </div>
+      <ng-container *ngIf="categories$ | async as categories">
+        <div *ngFor="let category of categories">
+          <h2 *ngIf="!search" [id]="categoryAnchorId(category.name)">{{ category.name }}</h2>
+          <div class="main-content">
+            <ng-container *ngFor="let prod of products">
+              <ng-container *ngIf="prod.category === category.name">
+                <app-product-card [product]="prod"></app-product-card>
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
+      </ng-container>
     </ng-container>
   </ng-container>
-
   <ng-template #noProducts>
     <div class="loading" *ngIf="loading$">
       <img src="assets/loading.gif" alt="">

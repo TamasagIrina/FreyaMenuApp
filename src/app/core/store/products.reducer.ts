@@ -32,5 +32,14 @@ export const productsReducer = createReducer(
     ...state,
     loading: false,
     error
+  })),
+  
+  on(ProductsActions.setProductImage, (state, { productId, imageUrl }) => ({
+    ...state,
+    products: state.products.map(product =>
+      product.id === productId
+        ? { ...product, imageUrl }
+        : product
+    )
   }))
 );

@@ -21,7 +21,7 @@ export class NotificationComponent {
     });
   }
 
-  show(message: string, duration: number = 3000) {
+  show(message: string, duration: number = 2000) {
     this.message = message;
     this.visible = true;
     setTimeout(() => this.visible = false, duration);

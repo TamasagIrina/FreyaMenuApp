@@ -52,8 +52,6 @@ export const cartReducer = createReducer(
 
     const existingItem = state.items.find(item => item.productId === productId);
 
-    console.log(existingItem);
-
 
     if(existingItem && existingItem.quantity > 1){
     

@@ -2,8 +2,15 @@
   margin: 1rem 0;
   border-radius: 1rem;
   padding: 1rem;
-  box-shadow: 0.3rem 0.4rem 3rem rgba(11, 11, 11, 0.457);
+  box-shadow: 0.3rem 0.4rem 3rem rgba(11, 11, 11, 0.2);
   background-color: whitesmoke;
+   flex: 0 0 auto;
+    scroll-snap-align: start;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.03);
+    }
 
   .order-header {
     display: flex;
@@ -16,36 +23,33 @@
       font-size: 1rem;
     }
 
-    .order-status {
-      font-size: 0.85rem;
-      padding: 0.25rem 0.6rem;
-      border-radius: 999px;
-      text-transform: uppercase;
-      font-weight: 500;
+   .order-status {
+  font-size: 0.85rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: background-color 0.3s, color 0.3s;
 
-      &.in_pregătire {
-        background-color: #e6eb51d7;
-        color: #856404;
-      }
-
-      &.livrat {
-        background-color: #d4edda;
-        color: #155724;
-      }
-
-      &.anulat {
-        background-color: #f8d7da;
-        color: #721c24;
-      }
-    }
+  &.in_pregatire {
+    background-color: #fff3cd;
+    color: #856404;
   }
 
-  .order-prep-time {
+  &.pregătit {
+    background-color: #d4edda;
+    color: #155724;
+  }
+}
+  }
+
+  .order-delivery-time,
+  .order-payment {
     display: flex;
     align-items: center;
     font-size: 0.9rem;
     color: #666;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.5rem;
 
     mat-icon {
       font-size: 18px;
@@ -60,6 +64,8 @@
   }
 
   .order-items {
+    margin-top: 0.5rem;
+
     .item {
       display: flex;
       justify-content: space-between;
@@ -70,5 +76,12 @@
     .item-price {
       font-weight: 500;
     }
+  }
+
+  .order-total {
+    text-align: right;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-top: 0.8rem;
   }
 }

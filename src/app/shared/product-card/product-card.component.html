@@ -1,5 +1,5 @@
 <mat-card class="card" (click)="openDetails()">
-  <img mat-card-image src="{{product.imageUrl}}" alt="{{product.name}}" />
+  <img #cardElement mat-card-image [src]="product.imageUrl" alt="{{product.name}}" />
 
   <mat-card-content class="mat-card-content">
  

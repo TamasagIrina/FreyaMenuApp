@@ -1,5 +1,5 @@
 <div class="profile-header">
-  <img class="avatar" src="assets/images/profile.jpg" alt="User" />
+  
 
   <div class="user-info">
     <h2>Salut!</h2>
@@ -7,22 +7,26 @@
   </div>
 </div>
 
+
 <div class="main-content">
   <div class="order-tabs">
-    <button 
-      [class.active]="selectedTab === 'in_progress'"
-      (click)="selectTab('in_progress')">
-      În pregatire
+    <button [class.active]="selectedTab === 'in_progress'" (click)="selectTab('in_progress')">
+      În pregătire
     </button>
-    <button 
-      [class.active]="selectedTab === 'delivered'"
-      (click)="selectTab('delivered')">
+    <button [class.active]="selectedTab === 'delivered'" (click)="selectTab('delivered')">
       Livrate
     </button>
   </div>
 
-  <div class="orders-list">
-    <app-order-card>
+</div>
+
+<div  class="orders-list scroll-orders">
+  <div class="orders-list" *ngIf="filteredOrders$ | async as orders">
+    <app-order-card *ngFor="let order of orders" [order]="order">
     </app-order-card>
+  </div>
+
+  <div class="no-orders" *ngIf="(filteredOrders$ | async)?.length === 0">
+    <img class="img" src="assets/cancel.png" alt="">
   </div>
 </div>

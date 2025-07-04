@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
+import { OrderSummary } from '../../core/interfaces/order.model';
 
 @Component({
   selector: 'app-order-card',
@@ -16,14 +17,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './order-card.component.scss'
 })
 export class OrderCardComponent {
-  order = {
-  id: '12345',
-  prepTime: 25,
-  status: 'In_pregătire',
-  items: [
-    { name: 'Cheeseburger', qty: 2, total: 19.8 },
-    { name: 'Cola', qty: 1, total: 5.0 }
-  ]
-};
+
+  @Input() order!: OrderSummary;
+
 
 }

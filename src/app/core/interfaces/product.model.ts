@@ -3,8 +3,8 @@ export interface Product {
   uid: string;
   name: string;
   price: number;
-  imageUid: string;
-  imageUrl:string;
+  imageUid: string ;
+  imageUrl: any;
   longDescription:string;
   shortDescription: string;
   category: string;

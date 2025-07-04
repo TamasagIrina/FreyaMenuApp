@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { FavoriteCardComponent } from "../../shared/favorite-card/favorite-card.component";
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import * as FavoriteActions from '../../core/store/favorite.actions';
+import * as FavoriteSelectors from '../../core/store/favorite.selectors';
+import { FavoriteItem } from '../../core/interfaces/favorite.model';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -9,11 +14,29 @@ import { FavoriteCardComponent } from "../../shared/favorite-card/favorite-card.
   imports: [
     MatButtonModule,
     MatIconModule,
-    FavoriteCardComponent
-],
+    CommonModule
+  ],
   templateUrl: './favorites.component.html',
   styleUrl: './favorites.component.scss'
 })
 export class FavoritesComponent {
+  favorites$: Observable<FavoriteItem[]>
+  totalFavorites$: Observable<number>
+  constructor(private store: Store) {
+    this.favorites$ = this.store.select(FavoriteSelectors.selectFavoriteItems);
+    this.totalFavorites$ = this.store.select(FavoriteSelectors.selectFavoriteTotal);
+  }
+
+  removeFavorite(productId: string) {
+    this.store.dispatch(FavoriteActions.removeFavorite({ productId }));
+  }
+
+  clearFavorites() {
+    this.store.dispatch(FavoriteActions.clearFavorites());
+  }
+
+  addToCart(){
+    
+  }
 
 }

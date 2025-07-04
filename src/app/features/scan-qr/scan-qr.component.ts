@@ -8,7 +8,8 @@ import { loadProducts } from '../../core/store/products.actions';
 import { selectProducts, selectProductsError, selectProductsLoading } from '../../core/store/products.selectors';
 import { Router } from '@angular/router';
 import * as CategoryActions from '../../core/store/category.actions';
-
+import { firstValueFrom } from 'rxjs';
+import * as OrderActions from '../../core/store/order.actions';
 
 @Component({
   selector: 'app-scan-qr',
@@ -29,48 +30,53 @@ export class ScanQRComponent {
     private clientService: DataBase
   ) { }
 
-  scanButtonOn() {
-    const userUID = localStorage.getItem('userUID');
+ 
 
-    if(!userUID){
-      this.clientService.addNewClient();
-    }
-    // this.clientService.addNewClient().subscribe({
-    //   next: (response) => console.log('Client adăugat cu succes:', response.payload),
-    //   error: (error) => console.error('Eroare la adăugare client:', error),
-    // });
+  async scanButtonOn() {
+    try {
+      let tokenValid = this.authService.isDateValidAndNotExpired();
 
-    if (!this.authService.isDateValidAndNotExpired()) {
-      this.authService.login(this.username, this.password).subscribe({
-        next: (response: any) => {
-          console.log('Login success:', response);
-          const token = response.payload?.token;
-          const expiresIn = response.payload?.expiresIn;
-          if (token) {
-            this.authService.saveToken(token);
-            console.log('Token salvat:', token);
 
-            this.authService.saveExparitionDate(expiresIn);
+      if (!tokenValid) {
+        const response: any = await firstValueFrom(this.authService.login(this.username, this.password));
+        console.log('Login success:', response);
 
-            this.store.dispatch(loadProducts());
+        const token = response.payload?.token;
+        const expiresIn = response.payload?.expiresIn;
 
-            this.store.dispatch(CategoryActions.loadCategories());
-
-          } else {
-            console.error('Token lipsă în răspuns!');
-          }
-        },
-        error: (err) => {
-          console.error('Login failed:', err);
+        if (!token) {
+          console.error('Token lipsă în răspuns!');
+          return;
         }
-      });
-    } else {
+
+        this.authService.saveToken(token);
+        this.authService.saveExparitionDate(expiresIn);
+        console.log('Token salvat:', token);
+      }
+
+
+      const userUID = localStorage.getItem('userUID');
+      if (!userUID) {
+        this.clientService.addNewClient();
+      }
+
+
       this.store.dispatch(loadProducts());
+      
       this.store.dispatch(CategoryActions.loadCategories());
+    
+      if (userUID) {
+        this.store.dispatch(OrderActions.loadClientOrders({ userUID }));
+
+      } else {
+        console.error('Nu există userUID în localStorage!');
+      }
+
+      this.navigateTo('home');
+
+    } catch (error) {
+      console.error('A apărut o eroare în fluxul scanButtonOn:', error);
     }
-
-    this.navigateTo('home')
-
   }
 
   navigateTo(path: string): void {

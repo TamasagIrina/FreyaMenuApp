@@ -1,20 +1,38 @@
+<div class="favorites">
+  <div class="favorites-header">
+    <div class="left">
+      <div class="text">
+        <h2>Favorite ({{ totalFavorites$ | async }})</h2>
+        <p>Alege mancarea ta preferata</p>
+      </div>
 
-<div class="favorites-header">
-  <div class="left">
-    <div class="text">
-      <h2>Favorite</h2>
-      <p>Alege mancarea ta preferata</p>
+  
     </div>
   </div>
 
-  <div class="right">
-    <button class="filter-button" >
-      <mat-icon>tune</mat-icon>
-    </button>
-  </div>
-</div>
 
-<div class="main-content">
-  <app-favorite-card></app-favorite-card>
-</div>
+  <ng-container *ngIf="favorites$ | async as favorites; else noFavorites">
+    <div *ngFor="let item of favorites" class="favorite-item">
+      <img [src]="item.imageUrl" alt="{{ item.name }}" class="favorite-image" />
+      <div class="favorite-details">
+        <h3>{{ item.name }}</h3>
+        <p>{{ item.shortDescription }}</p>
+        <span class="favorite-price">{{ item.price | currency }}</span>
+        <div class="buttons">
+          <button class="remove-btn" (click)="removeFavorite(item.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button class="add-btn" (click)="addToCart()">
+            <mat-icon>shopping_cart</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 
+  <ng-template #noFavorites>
+    <p>No favorites yet.</p>
+  </ng-template>
+
+ 
+</div>

@@ -1,15 +1,19 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+
 import * as CartActions from '../../core/store/cart.actions';
 import { Store } from '@ngrx/store';
+import { catchError, map, Observable, of } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 
 export class DataBase {
-     private store = inject(Store);
+    getImage(imageUid: string) {
+      throw new Error('Method not implemented.');
+    }
+    private store = inject(Store);
     private apiUrl = 'https://api-staging-hesburger.freya.cloud';
 
     private readonly newClient = {
@@ -50,14 +54,25 @@ export class DataBase {
 
     }
 
-    getImage(url: string): Observable<{ payload: string }> {
-        return this.http.get<{ payload: string }>(this.apiUrl + "/Product/GetProductImage?imageUid=" + url);
-
+    getImageUrl(imageUid: string): Observable<string> {
+        if (imageUid) {
+            return this.http.get<{ payload: string }>(`${this.apiUrl}/Product/GetProductImage?imageUid=${imageUid}`).pipe(
+                    map(response => response.payload),
+                    catchError(() => of('')) 
+                );
+        } else {
+            return of(''); 
+        }
 
     }
 
     getCategorysSellingProducts(): Observable<any> {
         return this.http.get<any>(this.apiUrl + "/ProductCategory/FindSellingCategories?pageNo=0&sortBy=orderflag&sortOrder=asc&top=0");
+
+    }
+
+    getClientOrders(userUID: string): Observable<any> {
+        return this.http.get<any>(this.apiUrl + "/ClientOrder/FindMany?listOnly=false&pageNo=0&sortBy=deliveryDate&sortOrder=desc&top=0&clientUid=" + userUID);
 
     }
 
@@ -76,7 +91,7 @@ export class DataBase {
 
         const orderPayload = {
             "uid": null,
-            "startDate":now.toISOString(),
+            "startDate": now.toISOString(),
             "deliveryDate": new Date(now.getTime() + 5 * 60 * 1000).toISOString(),
             "deliveryStartDate": new Date(now.getTime() + 10 * 60 * 1000).toISOString(),
             "deliveryStopDate": null,
@@ -179,10 +194,10 @@ export class DataBase {
         };
 
         return this.http.post<any>(this.apiUrl + "/clientOrder/insert", orderPayload).subscribe({
-            next: (res) =>{
+            next: (res) => {
                 console.log('Comanda plasată cu succes', res);
                 this.store.dispatch(CartActions.clearCart());
-            } ,
+            },
             error: (err) => console.error('Eroare la plasarea comenzii', err),
         });
         // console.log(orderPayload);

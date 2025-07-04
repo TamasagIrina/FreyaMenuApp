@@ -14,9 +14,16 @@ import * as fromCart from './core/store/cart.reducer';
 import { localStorageSync } from 'ngrx-store-localstorage';
 import { CategoryEffects } from './core/store/category.effects';
 import { categoryReducer } from './core/store/category.reducer';
+import { orderReducer } from './core/store/order.reducer';
+import { OrderEffects } from './core/store/order.effects';
+import * as fromFavorites from './core/store/favorite.reducer';
 
 
-const keysToSync = [fromCart.cartFeatureKey];
+
+const keysToSync = [
+  fromCart.cartFeatureKey,
+  fromFavorites.favoriteFeatureKey
+];
 
 function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
   return localStorageSync({
@@ -36,12 +43,15 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideStore({ products: productsReducer }, { metaReducers }),
     provideState('category', categoryReducer),
+    provideState('order', orderReducer),
     provideState(fromProducts.productFeatureKey, fromProducts.productsReducer),
     provideState(fromCart.cartFeatureKey, fromCart.cartReducer),
+    provideState(fromFavorites.favoriteFeatureKey, fromFavorites.favoriteReducer),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideHttpClient(withInterceptors([authInterceptor])),
     provideEffects([ProductsEffects]),
     provideEffects([CategoryEffects]),
+    provideEffects([OrderEffects]),
 
   ]
 };

@@ -7,10 +7,11 @@ import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { Product } from '../../core/interfaces/product.model';
 import { Store } from '@ngrx/store';
-
+import * as FavoriteActions from '../../core/store/favorite.actions';
 import * as CartActions from '../../core/store/cart.actions';
 import { NotificationComponent } from '../notification/notification.component';
 import { NotificationService } from '../../core/services/notification.service';
+import { FavoriteItem } from '../../core/interfaces/favorite.model';
 
 
 
@@ -30,22 +31,31 @@ export class PopUpProductDetailsComponent {
   quantity: number = 1;
   note: string = '';
   adedToFavorite: boolean = false;
- 
+
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public product: Product,
     private dialogRef: MatDialogRef<PopUpProductDetailsComponent>,
     private dialog: MatDialog,
     private store: Store,
-    private notificationService: NotificationService 
+    private notificationService: NotificationService
   ) { }
 
   addToFavorite() {
 
     if (this.adedToFavorite) {
       this.adedToFavorite = false;
+      this.store.dispatch(FavoriteActions.removeFavorite({ productId:this.product.id }));
     } else {
       this.adedToFavorite = true;
+      const favoriteItem: FavoriteItem = {
+        id: this.product.id,
+        name: this.product.name,
+        shortDescription: this.product.shortDescription,
+        price: this.product.price,
+        imageUrl: this.product.imageUrl ?? '',
+      };
+      this.store.dispatch(FavoriteActions.addFavorite({ item: favoriteItem }));
     }
 
   }
