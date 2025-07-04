@@ -7,7 +7,7 @@ import * as FavoriteActions from '../../core/store/favorite.actions';
 import * as FavoriteSelectors from '../../core/store/favorite.selectors';
 import { FavoriteItem } from '../../core/interfaces/favorite.model';
 import { CommonModule } from '@angular/common';
-
+import * as CartActions from '../../core/store/cart.actions';
 
 @Component({
   selector: 'app-favorites',
@@ -35,8 +35,10 @@ export class FavoritesComponent {
     this.store.dispatch(FavoriteActions.clearFavorites());
   }
 
-  addToCart(){
-    
+  addToCart(productId: string){
+    this.store.dispatch(CartActions.addItem({ productId , quantity: 1 }));
+
+    this.removeFavorite(productId);
   }
 
 }
