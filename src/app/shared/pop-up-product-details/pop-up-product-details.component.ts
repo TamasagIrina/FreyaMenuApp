@@ -49,11 +49,8 @@ export class PopUpProductDetailsComponent {
     } else {
       this.adedToFavorite = true;
       const favoriteItem: FavoriteItem = {
-        id: this.product.id,
-        name: this.product.name,
-        shortDescription: this.product.shortDescription,
-        price: this.product.price,
-        imageUrl: this.product.imageUrl ?? '',
+        productId: this.product.id,
+        
       };
       this.store.dispatch(FavoriteActions.addFavorite({ item: favoriteItem }));
     }

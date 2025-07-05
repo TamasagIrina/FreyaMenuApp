@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import * as FavoriteActions from '../../core/store/favorite.actions';
 import * as FavoriteSelectors from '../../core/store/favorite.selectors';
-import { FavoriteItem } from '../../core/interfaces/favorite.model';
+import { FavoriteItem, FavoriteItemDetailed } from '../../core/interfaces/favorite.model';
 import { CommonModule } from '@angular/common';
 import * as CartActions from '../../core/store/cart.actions';
 
@@ -20,10 +20,10 @@ import * as CartActions from '../../core/store/cart.actions';
   styleUrl: './favorites.component.scss'
 })
 export class FavoritesComponent {
-  favorites$: Observable<FavoriteItem[]>
+  favorites$: Observable<FavoriteItemDetailed[]>
   totalFavorites$: Observable<number>
   constructor(private store: Store) {
-    this.favorites$ = this.store.select(FavoriteSelectors.selectFavoriteItems);
+    this.favorites$ = this.store.select(FavoriteSelectors.selectFavoriteItemsWithDetails);
     this.totalFavorites$ = this.store.select(FavoriteSelectors.selectFavoriteTotal);
   }
 

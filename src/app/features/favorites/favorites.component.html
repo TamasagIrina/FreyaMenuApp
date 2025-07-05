@@ -1,4 +1,4 @@
-<div class="favorites">
+<div class="main">
   <div class="favorites-header">
     <div class="left">
       <div class="text">
@@ -6,7 +6,7 @@
         <p>Alege mancarea ta preferata</p>
       </div>
 
-  
+
     </div>
   </div>
 
@@ -16,13 +16,14 @@
       <img [src]="item.imageUrl" alt="{{ item.name }}" class="favorite-image" />
       <div class="favorite-details">
         <h3>{{ item.name }}</h3>
-        <p>{{ item.shortDescription }}</p>
-        <span class="favorite-price">{{ item.price | currency }}</span>
+        <p>{{ item.shortdescription }}</p>
+        <span class="favorite-price">{{ item.price | currency:'RON ':'symbol':'1.2-2' }}
+        </span>
         <div class="buttons">
-          <button class="remove-btn" (click)="removeFavorite(item.id)">
+          <button class="remove-btn" (click)="removeFavorite(item.productId)">
             <mat-icon>delete</mat-icon>
           </button>
-          <button class="add-btn" (click)="addToCart(item.id)">
+          <button class="add-btn" (click)="addToCart(item.productId)">
             <mat-icon>shopping_cart</mat-icon>
           </button>
         </div>
@@ -34,5 +35,5 @@
     <p>No favorites yet.</p>
   </ng-template>
 
- 
+
 </div>

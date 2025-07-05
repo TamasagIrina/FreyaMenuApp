@@ -55,8 +55,11 @@
     </ng-container>
   </ng-container>
   <ng-template #noProducts>
-    <div class="loading" *ngIf="loading$">
+    <div  class="loading" *ngIf="!search">
       <img src="assets/loading.gif" alt="">
+    </div>
+     <div  class="no-results" *ngIf="search">
+      <img src="assets/no-results.png" alt="">
     </div>
   </ng-template>
 </div>

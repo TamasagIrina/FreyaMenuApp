@@ -1,7 +1,12 @@
+
 export interface FavoriteItem {
-  id: string;            
-  name: string;          
-  shortDescription: string; 
-  price: number;      
-  imageUrl: string;     
+  productId : string;
+}
+
+export interface FavoriteItemDetailed extends FavoriteItem {
+  uid: string;
+  name : string;
+  price : number;
+  imageUrl : string;
+  shortdescription:string;
 }
